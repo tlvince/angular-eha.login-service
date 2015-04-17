@@ -1,0 +1,28 @@
+{
+  "name": "angular-eha.login-service",
+  "description": "Login service to handle auth and auth renewal",
+  "version": "0.0.0",
+  "authors": [
+    "Remy Sharp <remy@remysharp.com>"
+  ],
+  "moduleType": [
+    "globals",
+    "node"
+  ],
+  "homepage": "https://github.com/eHealthAfrica",
+  "keywords": "eha",
+  "main": "dist/login-service.js",
+  "license": "Apache-2.0",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "localforage": "~1.2.2",
+    "angular-pouchdb": "~2.0.1",
+    "pouchdb-authentication": "~0.3.6"
+  }
+}

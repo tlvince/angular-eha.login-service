@@ -5,7 +5,7 @@
 
   var ngModule = angular.module('eha.login-service', [])
   .value('localforage', window.localforage)
-  .provider('loginService', function() {
+  .provider('ehaLoginService', function() {
     var $q;
     var DB_NAME = null;
 
@@ -53,10 +53,33 @@
         return _db;
       };
 
+      function localforgeWrap(method) {
+        return function() {
+          var deferred = $q.defer();
+          var args = [].slice.call(arguments, 0);
+
+          args.push(function(error, value) {
+            if (error) {
+              deferred.reject(error);
+            } else {
+              deferred.resolve(value);
+            }
+          });
+
+          localforage[method].apply(localforage, args);
+
+          return deferred.promise;
+        };
+      }
+
+      var setItem = localforgeWrap('setItem');
+      var getItem = localforgeWrap('getItem');
+      var removeItem = localforgeWrap('removeItem');
+
       var storeCredentials = function(username, password) {
         var promises = [
-          localforage.set('username', username),
-          localforage.set('password', password),
+          setItem('username', username),
+          setItem('password', password),
         ];
 
         return $q.all(promises);
@@ -64,8 +87,8 @@
 
       var getUserPass = function() {
         return $q.all([
-          localforage.get('username'),
-          localforage.get('password')
+          getItem('username'),
+          getItem('password')
         ]);
       };
 
@@ -82,7 +105,7 @@
           if (has) {
             return getUserPass();
           } else {
-            return notificationService.then(function(creds) {
+            return notificationService().then(function(creds) {
                 // $q promise can only take one value
                 return storeCredentials.apply(null, creds);
               })
@@ -115,8 +138,8 @@
       // FIXME this could mess things up https://github.com/eHealthAfrica/BiometricRegistration/blob/f1492732380322aca7415defd7dcb222034750f2/app/scripts/services/logout.js#L5
       loginService.logout = function() {
         return $q.all([
-          localforage.remove('username'),
-          localforage.remove('password'),
+          removeItem('username'),
+          removeItem('password'),
         ]);
       };
 

@@ -3,7 +3,7 @@
 
   /* globals prompt*/ // nasty
 
-  var ngModule = angular.module('eha.login-service', [])
+  var ngModule = angular.module('eha.login-service', ['pouchdb'])
   .value('localforage', window.localforage)
   .provider('ehaLoginService', function() {
     var q;

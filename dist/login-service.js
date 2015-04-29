@@ -6,7 +6,7 @@
   var ngModule = angular.module('eha.login-service', [])
   .value('localforage', window.localforage)
   .provider('ehaLoginService', function() {
-    var $q;
+    var q;
     var DB_NAME = null;
 
     // notificationService is a promise that must resolve with an array
@@ -14,7 +14,7 @@
     var notificationService = function() {
       var username = prompt('Username?');
       var password = prompt('Password?');
-      return $q.when([username, password]);
+      return q.when([username, password]);
     };
 
     this.config = function(options) {
@@ -32,13 +32,12 @@
       }
     };
 
-    this.$get = ['_$q_', 'localforage', 'pouchDB', function(
-      _$q_,
+    this.$get = ['$q', 'localforage', 'pouchDB', function(
+      $q,
       localforage,
       pouchDB
     ) {
-      // FIXME unsure if this will work...
-      $q = _$q_;
+      q = $q; // allow our notificationService use q later on
 
       var loginService = this;
 

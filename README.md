@@ -1,4 +1,4 @@
-# angular-eha.login.login-service
+# angular-eha.login-service
 
 [![Build Status](https://travis-ci.org/eHealthAfrica/login-service.svg)](https://travis-ci.org/eHealthAfrica/login-service) ![Dependecy Status](https://david-dm.org/eHealthAfrica/login-service.svg) ![Dev Dependecy Status](https://david-dm.org/eHealthAfrica/login-service/dev-status.svg)
 
@@ -8,11 +8,11 @@
 
 Install with npm:
 
-    npm install --save angular-eha.login.login-service
+    npm install --save angular-eha.login-service
 
 Or alternatively bower:
 
-    bower install --save angular-eha.login.login-service
+    bower install --save angular-eha.login-service
 
 ### Distribution bundle
 
@@ -20,7 +20,7 @@ Or alternatively bower:
 - *dist/login-service.min.js*
 
 
-Then simply add `eha.login.login-service` as dependencies somewhere in your project that makes sense and you're good to go.
+Then simply add `eha.login-service` as dependencies somewhere in your project that makes sense and you're good to go.
 
 #### A note on wiredep
 
@@ -47,10 +47,10 @@ Then you're free to include whichever bundle you prefer in what ever manner you 
   <head>
     <title>Back Button Example</title>
     <script src="bower_components/angular/angular.js"></script>
-    <script src="bower_components/angular-eha.login.login-service/dist/login-service.js"></script>
+    <script src="bower_components/angular-eha.login-service/dist/login-service.js"></script>
     <script>
     angular.module('backButtonExample', [
-      'eha.login.login-service'
+      'eha.login-service'
     ]);
     </script>
   </head>
@@ -75,11 +75,11 @@ Then you're free to include whichever bundle you prefer in what ever manner you 
 
 ```bash
 # Fork the upstream repo on github and pull down your fork
-git clone git@github.com:yourusername/angular-eha.login.login-service.git
+git clone git@github.com:yourusername/angular-eha.login-service.git
 # change into project folder
-cd angular-eha.login.login-service
+cd angular-eha.login-service
 # Add the upstream as a remote
-git remote add upstream  git@github.com:eHealthAfrica/angular-eha.login.login-service.git
+git remote add upstream  git@github.com:eHealthAfrica/angular-eha.login-service.git
 # Install the dev dependencies
 npm install
 ```
@@ -166,7 +166,7 @@ Publishing to bower is slightly simpler in so far that you only have to do it on
 e.g.
 
 ```
-bower register angular-eha.login.login-service <upstream_repo_url>
+bower register angular-eha.login-service <upstream_repo_url>
 ```
 ## License
 

@@ -1,5 +1,5 @@
 {
-  "name": "angular-eha.login.login-service",
+  "name": "angular-eha.login-service",
   "version": "0.0.0",
   "description": "Login service to handle auth and auth renewal",
   "main": "dist/login-service.js",

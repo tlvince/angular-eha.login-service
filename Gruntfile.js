@@ -82,7 +82,7 @@ module.exports = function(grunt) {
       dist: {
         src: ['src/**/*.tpl.html'],
         dest: '.tmp/template.js',
-        module: 'eha.login.login-service.template',
+        module: 'eha.login-service.template',
         options: {
           rename: function(moduleName) {
             var parts = moduleName.split('/');
@@ -143,10 +143,10 @@ module.exports = function(grunt) {
   grunt.registerTask('build', function() {
     grunt.task.run([
       'clean',
-      
+
       'concat:scripts',
-      
-      
+
+
       'ngAnnotate',
       'copy:scripts',
       'uglify:dist'

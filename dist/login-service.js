@@ -6,30 +6,9 @@
   var ngModule = angular.module('eha.login-service', ['pouchdb'])
   .value('localforage', window.localforage)
   .provider('ehaLoginService', function() {
-    var q;
     var DB_NAME = null;
-
-    // notificationService is a promise that must resolve with an array
-    // containing the username & password.
-    var notificationService = function() {
-      var username = prompt('Username?');
-      var password = prompt('Password?');
-      return q.when([username, password]);
-    };
-
-    this.config = function(options) {
-      if (options.notificationService) {
-        // `fn` must return a promise
-        if (typeof notificationService !== 'function') {
-          throw new Error('notificationService must be a function that ' +
-            'returns a promise');
-        }
-        notificationService = options.notificationService;
-      }
-
-      if (options.database) {
-        DB_NAME = options.database;
-      }
+    this.config = function(database) {
+      DB_NAME = database;
     };
 
     this.$get = ['$q', 'localforage', 'pouchDB', function(
@@ -37,9 +16,23 @@
       localforage,
       pouchDB
     ) {
-      q = $q; // allow our notificationService use q later on
-
       var loginService = this;
+
+      // notificationService is a promise that must resolve with an array
+      // containing the username & password.
+      var notificationService = function() {
+        var username = prompt('Username?');
+        var password = prompt('Password?');
+        return $q.when([username, password]);
+      };
+
+      loginService.config = function(notifier) {
+        if (typeof notifier !== 'function') {
+          throw new Error('notification service must be a function that ' +
+            'returns a promise');
+        }
+        notificationService = notifier;
+      };
 
       var _db; // cached db connection
       var db = function() {
@@ -118,7 +111,8 @@
       };
 
       loginService.login = function(username, password) {
-        return db().login(username, password);
+        var store = storeCredentials.bind(null, username, password);
+        return db().login(username, password).then(store);
       };
 
       loginService.renew = function() {

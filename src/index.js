@@ -111,7 +111,8 @@
       };
 
       loginService.login = function(username, password) {
-        return db().login(username, password);
+        var store = storeCredentials.bind(null, username, password);
+        return db().login(username, password).then(store);
       };
 
       loginService.renew = function() {

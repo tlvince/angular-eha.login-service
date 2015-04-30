@@ -42,6 +42,7 @@
       return $q.reject({status: 401, message: 'Name or password invalid'});
     });
 
+    angular.module('pouchdb', function() {});
     $provide.value('pouchDB', sinon.spy(function() {
       return {
         login: pouchSpy
@@ -94,12 +95,7 @@
     angular.module('eha.login-service.test', function() {
     }).config(function(_ehaLoginServiceProvider_) {
       ehaLoginServiceProvider = _ehaLoginServiceProvider_;
-      _ehaLoginServiceProvider_.config({
-        database: 'my_db_url',
-        // notificationService: function() {
-        //   return $q.when(['my_username', 'my_password']);
-        // }
-      });
+      _ehaLoginServiceProvider_.config('my_db_url');
     });
 
     // I don't quite understand why this works, but I need it to do config
@@ -195,17 +191,15 @@
     });
 
     it('should prompt user for creds if it doesn’t have any', function(done) {
-      ehaLoginServiceProvider.config({
-        notificationService: function() {
-          var defer = $q.defer();
+      ehaLoginServiceProvider.config(function() {
+        var defer = $q.defer();
 
-          setTimeout(function() {
-            defer.resolve(['remy', 'password']);
-            digest();
-          }, 100);
+        setTimeout(function() {
+          defer.resolve(['remy', 'password']);
+          digest();
+        }, 100);
 
-          return defer.promise;
-        }
+        return defer.promise;
       });
 
       inject(function(ehaLoginService) {

@@ -173,6 +173,8 @@
         expect(pouchSpy.called);
         var logins = pouchSpy.lastCall;
         expect(pouchSpy).to.have.been.calledWith('santa', 'claus');
+        expect(localFake.username).to.equal('santa');
+        expect(localFake.password).to.equal('claus');
         done();
       });
     });

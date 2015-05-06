@@ -92,6 +92,8 @@
         });
       };
 
+      loginService.getUserName = getItem.bind(null, 'username');
+
       loginService.maybeShowLoginUi = function() {
         return hasDatabaseCredentials().then(function(has) {
           if (has) {
